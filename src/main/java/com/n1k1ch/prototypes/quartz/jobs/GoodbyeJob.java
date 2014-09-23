@@ -6,7 +6,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.util.Locale;
-import java.util.logging.Level;
 
 /**
  * Created by n1k1ch on 24.09.2014.

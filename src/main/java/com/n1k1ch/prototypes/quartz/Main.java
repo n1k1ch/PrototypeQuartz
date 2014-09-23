@@ -6,6 +6,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -16,8 +18,13 @@ public class Main {
         BasicConfigurator.configure();
 
         Main main = new Main();
-        main.executeCron("1/10 * * * * ?");
-        main.executeCalendar(2);
+        //main.executeCron("1/10 * * * * ?");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2015);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 31);
+        main.executeCalendar(5, calendar.getTime());
     }
 
     public void executeCron(String expression) {
@@ -46,7 +53,7 @@ public class Main {
         }
     }
 
-    public void executeCalendar(Integer months) {
+    public void executeCalendar(Integer months, Date startDate) {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
         try {
@@ -59,8 +66,9 @@ public class Main {
             CalendarIntervalTrigger calendarIntervalTrigger = TriggerBuilder.newTrigger()
                     .withIdentity("CalendarIntervalTrigger1", "group2")
                     .withSchedule(CalendarIntervalScheduleBuilder.calendarIntervalSchedule()
-                        .withIntervalInMonths(months)
+                                    .withIntervalInMonths(months)
                     )
+                    .startAt(startDate)
                     .build();
 
             scheduler.start();
