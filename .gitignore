@@ -1,5 +1,6 @@
 #idea
 .idea/
+exportToHTML
 
 #gradle
 .gradle/
